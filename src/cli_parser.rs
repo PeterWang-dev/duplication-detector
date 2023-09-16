@@ -14,7 +14,7 @@ mod tests {
     use super::to_config;
 
     #[test]
-    fn test_config_from_command() {
+    fn test_to_config() {
         use clap::Arg;
 
         let args = vec![

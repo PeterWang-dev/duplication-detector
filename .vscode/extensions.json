@@ -5,7 +5,7 @@
         "serayuzgur.crates",
         "dustypomerleau.rust-syntax",
         "jscearcy.rust-doc-viewer",
-        "bierner.markdown-preview-github-styles",
-        "yzhang.markdown-all-in-one"
+        "yzhang.markdown-all-in-one",
+        "bierner.github-markdown-preview"
     ]
 }

@@ -25,7 +25,7 @@ mod tests {
     use std::fs;
 
     #[test]
-    fn test_full_functionalities() {
+    fn test_trim_and_convert() {
         // Create test files
         let file_path = PathBuf::from("./original.txt");
         fs::write(

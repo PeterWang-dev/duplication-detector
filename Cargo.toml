@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 clap = "4.4.3"
+textdistance = "1.0.2"

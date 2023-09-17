@@ -35,8 +35,13 @@ impl Detector {
         self.input_string = input_string;
     }
 
+    fn from_result_to_ratio(result: f64) -> f64 {
+        1.0 - result
+    }
+
     pub fn compute_ratio(&mut self) -> f64 {
-        self.duplicate_ratio = damerau_levenshtein(&self.original_string, &self.input_string);
+        let textdistance_result = damerau_levenshtein(&self.original_string, &self.input_string);
+        self.duplicate_ratio = Self::from_result_to_ratio(textdistance_result);
         self.duplicate_ratio
     }
 }
@@ -99,8 +104,8 @@ mod tests {
     }
 
     // reverse (minus by 1) and reserve 2 decimal places (half-up rounding)
-    fn reverse_and_round(num: f64) -> f64 {
-        ((1.0 - num) * 100.0).round() / 100.0
+    fn round_two_decimal(num: f64) -> f64 {
+        (num * 100.0).round() / 100.0
     }
 
     #[test]
@@ -110,7 +115,7 @@ mod tests {
             String::from("它是测试文档，来测试软件功能。"),
         );
 
-        let ratio_rounded = reverse_and_round(detector.compute_ratio());
+        let ratio_rounded = round_two_decimal(detector.compute_ratio());
 
         assert!(
             ratio_rounded > 0.0 && ratio_rounded < 1.0,
@@ -126,7 +131,7 @@ mod tests {
             String::from("完全不同的文字来确定重复率是否为0"),
         );
 
-        let ratio_rounded = reverse_and_round(detector.compute_ratio());
+        let ratio_rounded = round_two_decimal(detector.compute_ratio());
 
         assert!(
             ratio_rounded <= (0.0 + 0.06),
@@ -142,7 +147,7 @@ mod tests {
             String::from("接下来，测试完全相同的文字的重复率。"),
         );
 
-        let ratio_rounded = reverse_and_round(detector.compute_ratio());
+        let ratio_rounded = round_two_decimal(detector.compute_ratio());
 
         assert!(
             ratio_rounded >= (1.0 - 0.06),

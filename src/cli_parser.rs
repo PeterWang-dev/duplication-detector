@@ -24,7 +24,7 @@ mod tests {
             "./output.txt",
         ];
 
-        // Manually create a clap::Command
+        // Manually create a clap::ArgMatches object
         let matches = clap::Command::new("duplicate-detector")
             .arg(Arg::new("original_file").required(true))
             .arg(Arg::new("input_file").required(true))

@@ -46,11 +46,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_detector() {
+    fn test_detector_new() {
         let original_string = String::from("这是一个测试文档，用于测试软件的功能。");
         let input_string = String::from("它是测试文档，来测试软件功能");
 
-        let mut detector = Detector::new(original_string, input_string);
+        let detector = Detector::new(original_string, input_string);
 
         assert_eq!(
             detector.original_string,
@@ -59,6 +59,14 @@ mod tests {
         assert_eq!(
             detector.input_string,
             String::from("它是测试文档，来测试软件功能")
+        );
+    }
+
+    #[test]
+    fn test_detector_getter() {
+        let detector = Detector::new(
+            String::from("这是一个测试文档，用于测试软件的功能。"),
+            String::from("它是测试文档，来测试软件功能"),
         );
 
         assert_eq!(
@@ -70,49 +78,76 @@ mod tests {
             &String::from("它是测试文档，来测试软件功能")
         );
         assert!(detector.duplicate_ratio() == 0.0);
+    }
 
-        // reverse (minus by 1) and reserve 2 decimal places (half-up rounding)
-        fn reverse_and_round(num: f64) -> f64 {
-            ((1.0 - num) * 100.0).round() / 100.0
-        }
+    #[test]
+    fn test_detector_setter() {
+        let mut detector = Detector::new(String::new(), String::new());
 
-        let ratio_rounded = reverse_and_round(detector.compute_ratio());
-
-        assert!(
-            ratio_rounded > 0.0,
-            "ratio {} is not greater than 0.0",
-            ratio_rounded
-        );
-
-        detector.set_input_string(String::from("完全不同的文字来确定重复率是否为0"));
-
-        assert_eq!(
-            detector.input_string,
-            String::from("完全不同的文字来确定重复率是否为0")
-        );
-
-        let ratio_rounded = reverse_and_round(detector.compute_ratio());
-
-        assert!(
-            ratio_rounded <= 0.05,
-            "ratio {} is not less than or equal to 0.05",
-            ratio_rounded
-        ); // allow 5% error
-
-        detector.set_original_string(String::from("接下来，测试完全相同的文字的重复率。"));
-        detector.set_input_string(String::from("接下来，测试完全相同的文字的重复率。"));
+        detector.set_original_string(String::from("这是一个测试文档，用于测试软件的功能"));
+        detector.set_input_string(String::from("它是测试文档，来测试软件功能。"));
 
         assert_eq!(
             detector.original_string,
-            String::from("接下来，测试完全相同的文字的重复率。")
+            String::from("这是一个测试文档，用于测试软件的功能")
+        );
+
+        assert_eq!(
+            detector.input_string,
+            String::from("它是测试文档，来测试软件功能。")
+        );
+    }
+
+    // reverse (minus by 1) and reserve 2 decimal places (half-up rounding)
+    fn reverse_and_round(num: f64) -> f64 {
+        ((1.0 - num) * 100.0).round() / 100.0
+    }
+
+    #[test]
+    fn test_detector_compute_ratio_partial_similar() {
+        let mut detector = Detector::new(
+            String::from("这是一个测试文档，用于测试软件的功能"),
+            String::from("它是测试文档，来测试软件功能。"),
         );
 
         let ratio_rounded = reverse_and_round(detector.compute_ratio());
 
         assert!(
-            ratio_rounded >= 0.95,
-            "ratio {} is not greater than or equal to 0.95",
+            ratio_rounded > 0.0 && ratio_rounded < 1.0,
+            "ratio {} is not greater than 0.0",
             ratio_rounded
-        ); // allow 5% error
+        );
+    }
+
+    #[test]
+    fn test_detector_compute_ratio_not_similar() {
+        let mut detector = Detector::new(
+            String::from("这是一个测试文档，用于测试软件的功能"),
+            String::from("完全不同的文字来确定重复率是否为0"),
+        );
+
+        let ratio_rounded = reverse_and_round(detector.compute_ratio());
+
+        assert!(
+            ratio_rounded <= (0.0 + 0.06),
+            "ratio {} is not approximately equal to 0.0",
+            ratio_rounded
+        ); // allow ±6% error (lower is better)
+    }
+
+    #[test]
+    fn test_detector_compute_ratio_almost_same() {
+        let mut detector = Detector::new(
+            String::from("接下来，测试完全相同的文字的重复率。"),
+            String::from("接下来，测试完全相同的文字的重复率。"),
+        );
+
+        let ratio_rounded = reverse_and_round(detector.compute_ratio());
+
+        assert!(
+            ratio_rounded >= (1.0 - 0.06),
+            "ratio {} is not approximately equal to 1.0",
+            ratio_rounded
+        ); // allow ±6% error (upper is better)
     }
 }

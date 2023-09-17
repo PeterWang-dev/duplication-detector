@@ -37,12 +37,17 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_config() {
+    fn test_config_from() {
         let config = Config::from("./original.txt", "./input.txt", "./output.txt");
 
         assert_eq!(config.original_path, PathBuf::from("./original.txt"));
         assert_eq!(config.input_path, PathBuf::from("./input.txt"));
         assert_eq!(config.output_path, PathBuf::from("./output.txt"));
+    }
+
+    #[test]
+    fn test_config_getter() {
+        let config = Config::from("./original.txt", "./input.txt", "./output.txt");
 
         assert_eq!(config.original_path(), &PathBuf::from("./original.txt"));
         assert_eq!(config.input_path(), &PathBuf::from("./input.txt"));

@@ -1,5 +1,3 @@
-use std::result;
-
 use textdistance::nstr::damerau_levenshtein;
 
 pub struct Detector {

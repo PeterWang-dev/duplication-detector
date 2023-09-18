@@ -1,5 +1,5 @@
 use clap::ArgMatches;
-use duplicate_detector::Config;
+use duplication_detector::Config;
 
 pub fn to_config(matches: ArgMatches) -> Config {
     let original_path = matches.get_one::<String>("original_file").unwrap();
@@ -18,14 +18,14 @@ mod tests {
         use clap::Arg;
 
         let args = vec![
-            "duplicate-detector",
+            "duplication-detector",
             "./original.txt",
             "./input.txt",
             "./output.txt",
         ];
 
         // Manually create a clap::ArgMatches object
-        let matches = clap::Command::new("duplicate-detector")
+        let matches = clap::Command::new("duplication-detector")
             .arg(Arg::new("original_file").required(true))
             .arg(Arg::new("input_file").required(true))
             .arg(Arg::new("output_file").required(true)).get_matches_from(&args);

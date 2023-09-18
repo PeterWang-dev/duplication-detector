@@ -7,16 +7,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in library 'duplicate-detector'",
+            "name": "Debug unit tests in library 'duplication-detector'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
                     "--lib",
-                    "--package=duplicate-detector"
+                    "--package=duplication-detector"
                 ],
                 "filter": {
-                    "name": "duplicate-detector",
+                    "name": "duplication-detector",
                     "kind": "lib"
                 }
             },
@@ -26,15 +26,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'duplicate-detector'",
+            "name": "Debug executable 'duplication-detector'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=duplicate-detector",
-                    "--package=duplicate-detector"
+                    "--bin=duplication-detector",
+                    "--package=duplication-detector"
                 ],
                 "filter": {
-                    "name": "duplicate-detector",
+                    "name": "duplication-detector",
                     "kind": "bin"
                 }
             },
@@ -48,16 +48,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'duplicate-detector'",
+            "name": "Debug unit tests in executable 'duplication-detector'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=duplicate-detector",
-                    "--package=duplicate-detector"
+                    "--bin=duplication-detector",
+                    "--package=duplication-detector"
                 ],
                 "filter": {
-                    "name": "duplicate-detector",
+                    "name": "duplication-detector",
                     "kind": "bin"
                 }
             },
@@ -73,7 +73,7 @@
                     "test",
                     "--no-run",
                     "--test=integration_test",
-                    "--package=duplicate-detector"
+                    "--package=duplication-detector"
                 ],
                 "filter": {
                     "name": "integration_test",

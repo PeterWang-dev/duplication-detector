@@ -1,4 +1,4 @@
-use duplicate_detector::{preprocessor, processor, Config};
+use duplication_detector::{preprocessor, processor, Config};
 use std::{fs, io};
 
 #[test]

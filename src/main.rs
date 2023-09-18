@@ -4,7 +4,7 @@ mod cli_parser;
 mod controller;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let matches = Command::new("duplicate-detector")
+    let matches = Command::new("duplication-detector")
         .version("0.1.0")
         .author("PeterWang-dev <PeterWang030908@hotmail.com>")
         .about(
@@ -25,7 +25,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             Arg::new("output_file")
                 .help("The path where it stores the ratio of duplication")
                 .required(true),
-        ).get_matches();
+        )
+        .get_matches();
 
     let config = cli_parser::to_config(matches);
 
@@ -36,4 +37,3 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
-

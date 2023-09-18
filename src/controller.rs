@@ -1,6 +1,5 @@
+use duplication_detector::{preprocessor::trim_and_convert, processor::Detector, Config};
 use std::{error::Error, fs, io};
-
-use duplicate_detector::{preprocessor::trim_and_convert, processor::Detector, Config};
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // Print the inputs from CLI.

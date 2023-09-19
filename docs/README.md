@@ -1,3 +1,4 @@
+
 # 软件工程第二次作业——个人项目
 
 | 这个作业属于哪个课程 | [软件工程](https://edu.cnblogs.com/campus/gdgy/CSGrade21-34)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -40,9 +41,9 @@ have）** 、 **应该（Should have）** 、 **可以（Could have）** 、
 
 - [x] 全功能 CLI
   界面支持：使用通用方法解析命令行参数，支持扩展多种参数格式，支持帮助信息
-- [ ]
+- \[ \]
   多语言支持：支持多种语言的重复率计算，如中文、英文等，支持混合语言文本输入
-- [ ]
+- \[ \]
   日志系统：向用户提供运行时信息，并集成至操作系统日志系统，方便用户查看
 
 ### Won’t have
@@ -151,8 +152,9 @@ have）** 、 **应该（Should have）** 、 **可以（Could have）** 、
 <figure>
 <img src="assets/imgs/Basic_Architecture.jpg"
 alt="设计架构图（ Duplication Dector v0.2.0 ）" />
-<figcaption aria-hidden="true">设计架构图（ Duplication Dector v0.2.0
-）</figcaption>
+<figcaption aria-hidden="true">
+设计架构图（ Duplication Dector v0.2.0 ）
+</figcaption>
 </figure>
 
 # 实现过程
@@ -244,7 +246,9 @@ Test Driven Development, TDD ）。
 <figure>
 <img src="assets/imgs/Flamegraph_Unoptimized.svg"
 alt="执行时间为 37s 的热力图" />
-<figcaption aria-hidden="true">执行时间为 37s 的热力图</figcaption>
+<figcaption aria-hidden="true">
+执行时间为 37s 的热力图
+</figcaption>
 </figure>
 
 测试编译器优化后（ `[optimized + debuginfo]`
@@ -253,7 +257,9 @@ alt="执行时间为 37s 的热力图" />
 <figure>
 <img src="assets/imgs/Flamegraph_Optimized.svg"
 alt="执行时间为 4s 的热力图" />
-<figcaption aria-hidden="true">执行时间为 4s 的热力图</figcaption>
+<figcaption aria-hidden="true">
+执行时间为 4s 的热力图
+</figcaption>
 </figure>
 
 从热力图可以看到，性能瓶颈主要在 `textdistance` 库的

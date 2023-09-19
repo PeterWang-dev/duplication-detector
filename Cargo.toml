@@ -1,7 +1,11 @@
 [package]
 name = "duplication-detector"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
+authors = ["PeterWang-dev <PeterWang030908@hotmail.com>"]
+description = "A simple text file duplication (similarity) detector."
+license = "MIT"
+publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

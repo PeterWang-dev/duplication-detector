@@ -64,7 +64,7 @@ fn bench_change_distance_15(c: &mut Criterion) {
 
 criterion_group! {
     name = benches;
-    config = Criterion::default().sample_size(10).measurement_time(Duration::from_secs(30));
+    config = Criterion::default().sample_size(10).measurement_time(Duration::from_secs(20));
     targets = bench_add_something, bench_delete_something, bench_change_distance_1, bench_change_distance_10, bench_change_distance_15
 }
 

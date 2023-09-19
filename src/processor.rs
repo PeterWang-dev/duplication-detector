@@ -48,10 +48,12 @@ impl Detector {
         let textdistance_result: f64;
         if self.input_string.len() <= 30000 {
             textdistance_result = damerau_levenshtein(&self.original_string, &self.input_string);
+            self.duplicate_ratio = Some(Self::from_result_to_ratio(textdistance_result));
         } else {
             textdistance_result = cosine(&self.original_string, &self.input_string);
+            self.duplicate_ratio = Some(textdistance_result);
         }
-        self.duplicate_ratio = Some(Self::from_result_to_ratio(textdistance_result));
+
     }
 }
 

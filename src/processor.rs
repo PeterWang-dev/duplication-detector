@@ -6,11 +6,6 @@ pub struct Detector {
     duplicate_ratio: Option<f64>,
 }
 
-pub enum ErrorKind {
-    IllegaOperation,
-    InternalError,
-}
-
 impl Detector {
     pub fn new(original_string: String, input_string: String) -> Self {
         Detector {

@@ -1,4 +1,4 @@
-use std::{error::Error, fs, io, path::PathBuf};
+use std::{error::Error, fs, io, path::PathBuf, f64::INFINITY};
 
 pub mod preprocessor;
 pub mod processor;
@@ -47,8 +47,18 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
     // Process, calculate and print the ratio. No errors should occur here.
     let mut dector = processor::Detector::new(original_string, input_string);
-    let ratio: f64 = dector.compute_ratio();
-    println!("Ratio: {:.2}", ratio);
+    dector.compute_ratio();
+
+    let ratio: f64 = match dector.duplicate_ratio() {
+        Some(r) => {
+            println!("Ratio: {:.2}", r);
+            r
+        }
+        None => {
+            println!("Ratio: None");
+            INFINITY
+        }
+    };
 
     // Write the ratio to the output file. Errors are propagated.
     let mut output_file = fs::File::create(config.output_path())?;

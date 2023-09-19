@@ -1,9 +1,14 @@
-use textdistance::nstr::damerau_levenshtein;
+use textdistance::nstr::{cosine,damerau_levenshtein};
 
 pub struct Detector {
     original_string: String,
     input_string: String,
-    duplicate_ratio: f64,
+    duplicate_ratio: Option<f64>,
+}
+
+pub enum ErrorKind {
+    IllegaOperation,
+    InternalError,
 }
 
 impl Detector {
@@ -11,7 +16,7 @@ impl Detector {
         Detector {
             original_string,
             input_string,
-            duplicate_ratio: 0.0,
+            duplicate_ratio: None,
         }
     }
 
@@ -23,7 +28,7 @@ impl Detector {
         &self.input_string
     }
 
-    pub fn duplicate_ratio(&self) -> f64 {
+    pub fn duplicate_ratio(&self) -> Option<f64> {
         self.duplicate_ratio
     }
 
@@ -39,10 +44,14 @@ impl Detector {
         1.0 - result
     }
 
-    pub fn compute_ratio(&mut self) -> f64 {
-        let textdistance_result = damerau_levenshtein(&self.original_string, &self.input_string);
-        self.duplicate_ratio = Self::from_result_to_ratio(textdistance_result);
-        self.duplicate_ratio
+    pub fn compute_ratio(&mut self) {
+        let textdistance_result: f64;
+        if self.input_string.len() <= 30000 {
+            textdistance_result = damerau_levenshtein(&self.original_string, &self.input_string);
+        } else {
+            textdistance_result = cosine(&self.original_string, &self.input_string);
+        }
+        self.duplicate_ratio = Some(Self::from_result_to_ratio(textdistance_result));
     }
 }
 
@@ -82,7 +91,7 @@ mod tests {
             detector.input_string(),
             &String::from("它是测试文档，来测试软件功能")
         );
-        assert!(detector.duplicate_ratio() == 0.0);
+        assert!(detector.duplicate_ratio() == None);
     }
 
     #[test]
@@ -115,7 +124,8 @@ mod tests {
             String::from("它是测试文档，来测试软件功能。"),
         );
 
-        let ratio_rounded = round_two_decimal(detector.compute_ratio());
+        detector.compute_ratio();
+        let ratio_rounded = round_two_decimal(detector.duplicate_ratio().unwrap());
 
         assert!(
             ratio_rounded > 0.0 && ratio_rounded < 1.0,
@@ -131,7 +141,8 @@ mod tests {
             String::from("完全不同的文字来确定重复率是否为0"),
         );
 
-        let ratio_rounded = round_two_decimal(detector.compute_ratio());
+        detector.compute_ratio();
+        let ratio_rounded = round_two_decimal(detector.duplicate_ratio().unwrap());
 
         assert!(
             ratio_rounded <= (0.0 + 0.06),
@@ -147,7 +158,8 @@ mod tests {
             String::from("接下来，测试完全相同的文字的重复率。"),
         );
 
-        let ratio_rounded = round_two_decimal(detector.compute_ratio());
+        detector.compute_ratio();
+        let ratio_rounded = round_two_decimal(detector.duplicate_ratio().unwrap());
 
         assert!(
             ratio_rounded >= (1.0 - 0.06),

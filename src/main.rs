@@ -1,7 +1,7 @@
 use clap::{Arg, Command};
+use duplication_detector::run;
 
 mod cli_parser;
-mod controller;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let matches = Command::new("duplication-detector")
@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let config = cli_parser::to_config(matches);
 
-    if let Err(e) = controller::run(config) {
+    if let Err(e) = run(config) {
         eprintln!("Application error: {}", e);
         std::process::exit(1);
     }

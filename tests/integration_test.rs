@@ -3,7 +3,7 @@ use std::{fs, io};
 
 #[test]
 fn test_full_functionalities() {
-    let config = Config::from("./original.txt", "./input.txt", "./output.txt");
+    let config = Config::from("original.txt", "input.txt", "output.txt");
 
     // Create test files
     fs::write(
@@ -30,5 +30,41 @@ fn test_full_functionalities() {
     // Clean up
     fs::remove_file(config.original_path()).unwrap();
     fs::remove_file(config.input_path()).unwrap();
+    fs::remove_file(config.output_path()).unwrap();
+}
+
+#[test]
+fn test_with_example_inputs() {
+    // Use the example inputs from example/inputs.
+    let config = Config::from(
+        "example/inputs/orig.txt",
+        "example/inputs/orig_0.8_add.txt",
+        "output.txt",
+    );
+
+    let original_string = preprocessor::trim_and_convert(config.original_path()).unwrap();
+    let input_string = preprocessor::trim_and_convert(config.input_path()).unwrap();
+
+    let mut dector = processor::Detector::new(original_string, input_string);
+    dector.compute_ratio();
+    let ratio: f64 = dector.duplicate_ratio().unwrap();
+
+    if fs::read(config.output_path()).is_ok() {
+        fs::remove_file(config.output_path()).unwrap();
+    }
+
+    let mut output_file = fs::File::create(config.output_path()).unwrap();
+    io::Write::write_fmt(&mut output_file, format_args!("{ratio:.2}")).unwrap();
+
+    let result_string = fs::read_to_string(config.output_path()).unwrap();
+    let result = result_string.parse::<f64>().unwrap();
+
+    assert!(
+        result > 0.80 && result < 0.95,
+        "result: {} is not correct",
+        result
+    );
+
+    // Clean up
     fs::remove_file(config.output_path()).unwrap();
 }

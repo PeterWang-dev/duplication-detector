@@ -15,7 +15,7 @@ fn bench_add_something(c: &mut Criterion) {
 }
 
 fn bench_delete_something(c: &mut Criterion) {
-    c.bench_function("add_something", |b| {
+    c.bench_function("delete_something", |b| {
         b.iter(|| {
             run(black_box(Config::from(
                 "example/inputs/orig.txt",

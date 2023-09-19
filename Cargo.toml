@@ -1,10 +1,21 @@
 [package]
-name = "duplicate-detector"
-version = "0.1.0"
+name = "duplication-detector"
+version = "0.2.0"
 edition = "2021"
+authors = ["PeterWang-dev <PeterWang030908@hotmail.com>"]
+description = "A simple text file duplication (similarity) detector."
+license = "MIT"
+publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dev-dependencies]
+criterion = "0.5.1"
 
 [dependencies]
 clap = "4.4.3"
 textdistance = "1.0.2"
+
+[[bench]]
+name = "criterion_benchmark"
+harness = false
